@@ -1,9 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using TaxService.Models;
 using TaxService.Services;
 
@@ -22,8 +18,8 @@ namespace TaxService.Controllers
 
         //Adding new tax rule: dates, rates
         [HttpPost]
-        [Route("AddTaxRules")]
-        public ActionResult<TaxRules> AddTaxRules (TaxRules rules)
+        [Route("AddTaxRule")]
+        public ActionResult<TaxRules> AddTaxRules(TaxRules rules)
         {
             var taxRules = _services.AddTaxRules(rules);
             if (taxRules == null)
@@ -32,19 +28,14 @@ namespace TaxService.Controllers
             }
             return taxRules;
         }
-    
+
         //Parses out all of the TaxRules that we added
         [HttpGet]
         [Route("GetTaxRules")]
-        public ActionResult<Dictionary<string, TaxRules>> GetTaxRules()
+        public IEnumerable<TaxRules> Get()
         {
-            var taxRules = _services.GetTaxRules();
-
-            if (taxRules.Count == 0)
-            {
-                return NotFound();
-            }
-            return taxRules;
+            return _services.GetTaxRules();
         }
+
     }
 }

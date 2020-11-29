@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Threading.Tasks;
-using TaxService.Models;
 
 namespace TaxService.Services
 {
@@ -27,30 +25,30 @@ namespace TaxService.Services
         {
             _taxedcities = taxedcities;
             _taxrules = taxrules;
-            
+            //_logService =  logService
+
         }
 
-        private void UpdateDateAndRates(int taxRule)
+        private void UpdateDateAndRates(int id)
         {
-            yearlyTaxRate = _taxrules.GetYearlyTaxRate(taxRule.ToString());
+            yearlyTaxRate = _taxrules.GetYearlyTaxRate(id);
 
-            monthlyTaxDate = _taxrules.GetMonthlyTaxDate(taxRule.ToString());
-            monthlyTaxRate = _taxrules.GetMonthlyTaxRate(taxRule.ToString());
+            monthlyTaxDate = _taxrules.GetMonthlyTaxDate(id);
+            monthlyTaxRate = _taxrules.GetMonthlyTaxRate(id);
 
-            weeklyTaxDate = _taxrules.GetWeeklyTaxDate(taxRule.ToString());
-            weeklyTaxRate = _taxrules.GetWeeklyTaxRate(taxRule.ToString());
+            weeklyTaxDate = _taxrules.GetWeeklyTaxDate(id);
+            weeklyTaxRate = _taxrules.GetWeeklyTaxRate(id);
 
-            dailyTaxDates = _taxrules.GetDailyTaxDate(taxRule.ToString());
-            dailyTaxRate = _taxrules.GetDailyTaxRate(taxRule.ToString());
+            dailyTaxDates = _taxrules.GetDailyTaxDate(id);
+            dailyTaxRate = _taxrules.GetDailyTaxRate(id);
         }
-        public double CalculateTax(string city, DateTime date)
+        public double CalculateTax(int id, DateTime date)
         {
-            int taxRule = _taxedcities.GetTaxRule(city);
-            UpdateDateAndRates(taxRule);
+            UpdateDateAndRates(id);
 
             if (date.Year == 2020)
             {
-                switch (taxRule)
+                switch (id)
                 {
                     case 1:
                         return RuleOneCalculation(date);
@@ -72,7 +70,9 @@ namespace TaxService.Services
             rate.Add(yearlyTaxRate);
 
             if (date.Month == monthlyTaxDate.Month)
+            {
                 rate.Add(monthlyTaxRate);
+            }
 
             for (int i = 0; i < 6; i++)
             {
@@ -80,7 +80,7 @@ namespace TaxService.Services
                     rate.Add(weeklyTaxRate);
                 weeklyTaxDate = weeklyTaxDate.AddDays(1);
             }
-       
+
             if (dailyTaxDates != null)
             {
                 foreach (DateTime dat in dailyTaxDates)

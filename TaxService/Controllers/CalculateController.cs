@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using TaxService.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using TaxService.Services;
 
 namespace TaxService.Controllers
@@ -24,9 +19,9 @@ namespace TaxService.Controllers
         //Calculates tax rates
         [HttpGet]
         [Route("CalculateTax")]
-        public ActionResult <double> CalculateTax(string city, DateTime date)
+        public ActionResult<double> CalculateTax(int id, DateTime date)
         {
-            double taxedCities = _services.CalculateTax(city, date);
+            double taxedCities = _services.CalculateTax(id, date);
 
             return taxedCities;
 

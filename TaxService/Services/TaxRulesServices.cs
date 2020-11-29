@@ -1,59 +1,63 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using TaxService.Models;
+using LiteDB;
+using TaxService.LiteDB;
 
 namespace TaxService.Services
 {
     public class TaxRulesServices : ITaxRulesServices
     {
-        private readonly Dictionary<string, TaxRules> _taxRules;
+        private readonly Dictionary<int, TaxRules> _taxRules;
+        private LiteDatabase _liteDb;
 
-        public TaxRulesServices()
+        public TaxRulesServices(ILiteDbContext liteDbContext)
         {
-            _taxRules = new Dictionary<string, TaxRules>();
+            _taxRules = new Dictionary<int, TaxRules>();
+            _liteDb = liteDbContext.Database;
         }
         public TaxRules AddTaxRules(TaxRules rules)
         {
-           //insert check if exists
-            _taxRules.Add(rules.TaxRuleNumber.ToString(), rules);
+            //insert check if exists
+            //_taxRules.Add(rules.TaxRuleNumber, rules);
+            _liteDb.GetCollection<TaxRules>("TaxRules").Insert(rules);
             return rules;
         }
-        public Dictionary<string, TaxRules> GetTaxRules()
+        public IEnumerable<TaxRules> GetTaxRules()
         {
-            return _taxRules;
+            return _liteDb.GetCollection<TaxRules>("TaxRules")
+               .FindAll();
         }
-        public double GetYearlyTaxRate(string taxRuleNumber)
+        public double GetYearlyTaxRate(int id)
         {
-            return _taxRules[taxRuleNumber].YearlyTaxRate;
-        }
-
-        public double GetMonthlyTaxRate(string taxRuleNumber)
-        {
-            return _taxRules[taxRuleNumber].MonthlyTaxRate;
-        }  
-
-        public double GetWeeklyTaxRate(string taxRuleNumber)
-        {
-            return _taxRules[taxRuleNumber].WeeklyTaxRate;
-        }
-        public double GetDailyTaxRate(string taxRuleNumber)
-        {
-            return _taxRules[taxRuleNumber].DailyTaxRate;
-        }
-        public DateTime GetMonthlyTaxDate(string taxRuleNumber)
-        {
-            return _taxRules[taxRuleNumber].MonthlyTax;
-        }
-        public DateTime GetWeeklyTaxDate(string taxRuleNumber)
-        {
-            return _taxRules[taxRuleNumber].WeeklyTax;
+            return _liteDb.GetCollection<TaxRules>("TaxRules").FindById(id).YearlyTaxRate;
         }
 
-        public List<DateTime> GetDailyTaxDate(string taxRuleNumber)
+        public double GetMonthlyTaxRate(int id)
         {
-            return _taxRules[taxRuleNumber].DailyTax;
+            return _liteDb.GetCollection<TaxRules>("TaxRules").FindById(id).MonthlyTaxRate;
+        }
+
+        public double GetWeeklyTaxRate(int id)
+        {
+            return _liteDb.GetCollection<TaxRules>("TaxRules").FindById(id).WeeklyTaxRate;
+        }
+        public double GetDailyTaxRate(int id)
+        {
+            return _liteDb.GetCollection<TaxRules>("TaxRules").FindById(id).DailyTaxRate;
+        }
+        public DateTime GetMonthlyTaxDate(int id)
+        {
+            return _liteDb.GetCollection<TaxRules>("TaxRules").FindById(id).MonthlyTax;
+        }
+        public DateTime GetWeeklyTaxDate(int id)
+        {
+            return _liteDb.GetCollection<TaxRules>("TaxRules").FindById(id).WeeklyTax;
+        }
+
+        public List<DateTime> GetDailyTaxDate(int id)
+        {
+            return _liteDb.GetCollection<TaxRules>("TaxRules").FindById(id).DailyTax;
         }
     }
 }

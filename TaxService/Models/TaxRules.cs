@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace TaxService.Models
 {
     public class TaxRules
     {
-        public int TaxRuleNumber { get; set; }
+        public int Id { get; set; }
+        public int TaxRuleNumber { get; set; } 
         public double YearlyTaxRate { get; set; } //2020.01.01-2020-12.31 always, does not change between rules
         public DateTime MonthlyTax { get; set; } //Certain month, only month changes. e.g. 2020.05.01-2020.05.31
         public double MonthlyTaxRate { get; set; }
