@@ -4,9 +4,11 @@ using TaxService.Models;
 
 namespace TaxService.Services
 {
-    public interface ITaxRulesServices
-    {
+  public interface ITaxRulesServices
+  {
         TaxRules AddTaxRules(TaxRules rules);
+        TaxRules EditTaxRule(TaxRules rules);
+        bool DeleteTaxRule(int id);
         IEnumerable<TaxRules> GetTaxRules();
         double GetYearlyTaxRate(int id);
         double GetMonthlyTaxRate(int id);
@@ -15,5 +17,5 @@ namespace TaxService.Services
         DateTime GetMonthlyTaxDate(int id);
         DateTime GetWeeklyTaxDate(int id);
         List<DateTime> GetDailyTaxDate(int id);
-    }
+  }
 }

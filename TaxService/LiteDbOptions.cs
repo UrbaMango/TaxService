@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TaxService
+﻿namespace TaxService
 {
-    public class LiteDbOptions
-    {
+  public class LiteDbOptions
+  {
 
-            //public const string LiteDbOption = "LiteDbOptions";
-            public string DatabaseLocation { get; set; }
+    //public const string LiteDbOption = "LiteDbOptions";
+    public string DatabaseLocation { get; set; }
 
-            //"LiteDbOptions": {
-                //"DatabaseLocation": "LiteDb/LiteDbTest.db"
-    }
+    //"LiteDbOptions": {
+    //"DatabaseLocation": "LiteDb/LiteDbTest.db"
+  }
 }
