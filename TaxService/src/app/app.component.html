@@ -1,1 +1,19 @@
-something atleast works
+<h2>2020 Taxed city rate calculator</h2>
+<ul class="cities">
+  <li *ngFor="let city of cities"
+      [class.selected]="city === selectedCity"
+      (click)="onSelect(city)">
+    <span class="badge">{{city.id}}</span> {{city.cityname}}
+  </li>
+</ul>
+
+<div *ngIf="selectedCity">
+
+  <h2>{{selectedCity.cityname | uppercase}} Selected </h2>
+  <div>
+  </div>
+   Date: <input type="text" value="Sydney" [(ngModel)]="placeId" />
+  <button (click)="myFunc(placeId)" formtarget="_blank"> Get Rate </button>
+</div>
+
+

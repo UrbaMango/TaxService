@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using TaxService.Models;
 using TaxService.Services;
@@ -15,10 +17,12 @@ namespace TaxService.Controllers
       _services = services;
     }
 
+    
     [HttpGet]
     [Route("GetAllCities")]
     public IEnumerable<TaxedCities> Get()
     {
+      Console.WriteLine(_services.FindAll());
       return _services.FindAll();
     }
 

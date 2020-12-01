@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using TaxService.Services;
 
@@ -22,6 +22,8 @@ namespace TaxService.Controllers
     public ActionResult<double> CalculateTax(int id, DateTime date)
     {
       double taxedCities = _services.CalculateTax(id, date);
+
+      Console.WriteLine(taxedCities);
 
       return taxedCities;
 

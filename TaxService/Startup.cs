@@ -32,14 +32,18 @@ namespace TaxService
       services.AddSingleton<ITaxRulesServices, Services.TaxRulesServices>();
       services.AddTransient<ICalculateServices, Services.CalculateServices>();
 
+      //services.AddCors();
+
       services.AddCors(options =>
       {
         options.AddPolicy("CorsPolicy",
-            builder => builder.AllowAnyOrigin()
+            builder => builder.WithOrigins("http://localhost:4200")
+            .AllowAnyOrigin()
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials());
       });
+      
 
     }
 
@@ -56,8 +60,14 @@ namespace TaxService
       }
 
       app.UseHttpsRedirection();
+      
+       app.UseCors("CorsPolicy");
+     // app.UseCors(
+      //  options => options.WithOrigins("http://localhost:4200/").AllowAnyMethod()
+      //  );
+
       app.UseMvc();
-      app.UseCors("CorsPolicy");
+     
 
 
     }
