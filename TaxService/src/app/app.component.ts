@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ANALYZE_FOR_ENTRY_COMPONENTS, Component, OnInit } from '@angular/core';
 
 import { Http } from '@angular/http'
 import { Observable } from 'rxjs';
@@ -20,15 +20,22 @@ export class AppComponent implements OnInit {
 
     selectedCity: City;
 
-    result: Number;
+    result: any;
 
     onSelect(city: City): void {
         this.selectedCity = city;
     }
 
-    myFunc(num1) {
-        this.cityService.getRate(this.selectedCity.id, num1).subscribe(this.result);
+    myFunc(num1): void {
+        
+
+        this.cityService.getRate(this.selectedCity.id, num1, this.selectedCity.taxRule)
+            .subscribe(result => this.result = result);
+
+       // this.result = this.cityService.getRate (this.selectedCity.id, num1, this.selectedCity.taxRule);
+
         console.log(this.result);
+
     }
 
     constructor(private cityService: CityService) { }
@@ -41,7 +48,6 @@ export class AppComponent implements OnInit {
     getCities(): void {
         this.cityService.getCities()
             .subscribe(cities => this.cities = cities);
-        console.log(this.cities);
     }
 
 }

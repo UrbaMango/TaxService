@@ -22,7 +22,6 @@ namespace TaxService.Controllers
     [Route("GetAllCities")]
     public IEnumerable<TaxedCities> Get()
     {
-      Console.WriteLine(_services.FindAll());
       return _services.FindAll();
     }
 

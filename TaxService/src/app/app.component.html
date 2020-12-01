@@ -8,12 +8,14 @@
 </ul>
 
 <div *ngIf="selectedCity">
-
   <h2>{{selectedCity.cityname | uppercase}} Selected </h2>
   <div>
   </div>
-   Date: <input type="text" value="Sydney" [(ngModel)]="placeId" />
+   Date: <input type="date" [(ngModel)]="placeId" />
   <button (click)="myFunc(placeId)" formtarget="_blank"> Get Rate </button>
 </div>
+
+<div *ngIf="result">
+  <h2>Result: {{result | uppercase}} </h2>
 
 

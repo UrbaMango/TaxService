@@ -9,19 +9,19 @@ namespace TaxService.Controllers
   public class CalculateController : ControllerBase
   {
 
-    private readonly ICalculateServices _services;
+    private readonly ICalculateServices _calculateservices;
 
     public CalculateController(ICalculateServices services)
     {
-      _services = services;
+      _calculateservices = services;
     }
 
     //Calculates tax rates
     [HttpGet]
     [Route("CalculateTax")]
-    public ActionResult<double> CalculateTax(int id, DateTime date)
+    public ActionResult<double> CalculateTax(int id, DateTime date, int taxRule)
     {
-      double taxedCities = _services.CalculateTax(id, date);
+      double taxedCities = _calculateservices.CalculateTax(id, date, taxRule);
 
       Console.WriteLine(taxedCities);
 

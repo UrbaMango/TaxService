@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -42,13 +42,13 @@ namespace TaxService.Services
       dailyTaxDates = _taxrules.GetDailyTaxDate(id);
       dailyTaxRate = _taxrules.GetDailyTaxRate(id);
     }
-    public double CalculateTax(int id, DateTime date)
+    public double CalculateTax(int id, DateTime date, int taxRule)
     {
       UpdateDateAndRates(id);
 
       if (date.Year == 2020)
       {
-        switch (id)
+        switch (taxRule)
         {
           case 1:
             return RuleOneCalculation(date);
